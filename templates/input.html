@@ -1,0 +1,13 @@
+<html>
+   <body>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+      <form action = "http://127.0.0.1:5000/result" method = "POST">
+         <p>Enter information : </p>
+         <p>URL : <input type = "text" name = "URL" /></p>
+         <p><input type = "submit" value = "submit" onclick="$('#loading').show();"/></p>
+      </form>
+      <div id="loading" style="display: none">
+         <img src="{{ url_for('static', filename='ajax_loader.gif')}}" alt="Loading......"/>
+      </div>
+   </body>
+</html>

@@ -1,29 +1,17 @@
-# README #
+# MLScraper
+Web Scraper built with Selenium to extract site data and run through an SVM classifier to extract relevant text.
 
-This README would normally document whatever steps are necessary to get your application up and running.
+### How to Use :
+First run `redis-server`. 
+Then run `flask_app.py`.
+Then run Celery worker using 
+`celery -A flask_app.celery worker --loglevel=info --config=multiscript_config --pool=eventlet`
 
-### What is this repository for? ###
+### To add data for training :
+Inject `js_click_content.js` in browser and manually select important text. 
+Press right-alt to download CSV of the site text. Repeat for multiple sites.
+Combine CSVs with csv_merger.py and add to existing `svm_training_data.csv`.
+Retrain model and check stats for performance using `model_trainer.py`.
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+### Others :
+- Change values in `multiscript_config.py` to update broker URLs and SVM performance.
