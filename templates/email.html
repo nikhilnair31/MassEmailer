@@ -35,11 +35,13 @@
 
 <body>
     <div style="background-color: rgb(225,227,229);">
-        <img src="../static/image.png" class="imagebanner" />
+        {% block content %}
+            <img src="{{ image }}"/>
+        {% endblock %}
 
     </div>
     <div class="container">
-        <h4>Hello Vidya !!</h4>
+        <h4>Hello {{ name }} !!</h4>
         <p>
             Here we have attached the contents based on your feedback report. Learn from the content which is specially designed to improve your weakness and to fill the skill gaps. Make sure you upgrade your weakness before to the
             next attempt which will be commencing after a week.
@@ -50,12 +52,9 @@
     </div>
     <div style="display: flex;">
         <ul id="link-group">
-            <li><a href="#!">Link 1</a></li>
-            <li><a href="#!">Link 2</a></li>
-            <li><a href="#!">Link 3</a></li>
-            <li><a href="#!">Link 4</a></li>
-            <li><a href="#!">Link 5</a></li>
-            <li><a href="#!">Link 6</a></li>
+            {% for link in linklist %}
+                <li><a href="#!">{{ link }}</a></li>
+            {% endfor %}
         </ul>
     </div>
 </body>
