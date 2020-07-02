@@ -82,38 +82,35 @@ def get_urls(keyword):
 
     return article_list
 
-def batch(iterable, n=1):
-    l = len(iterable)
-    for ndx in range(0, l, n):
-        yield iterable[ndx:min(ndx + n, l)]
-
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--headless')
 chrome_options.add_argument("--log-level=3")
-chrome_options.add_argument('--window-size=1920,1080')
 driver = webdriver.Chrome(ChromeDriverManager().install(), chrome_options=chrome_options)
-env = Environment(loader=PackageLoader('aws_ses', 'templates'))
 
+env = Environment(loader=PackageLoader('sql_ses_url_email', 'templates'))
 conn = psycopg2.connect( host = msc.DB_URL, port = msc.DB_PORT, user = msc.DB_USERNAME,
     password = msc.DB_PASSWORD, database = msc.DB_NAME )
 cursor = conn.cursor()
-# list_of_dicts = getTagsofEmailsCombined(conn)
 
-# temp_dict = dict(list_of_dicts[0])
-# print(f'\n temp_dict :\n{temp_dict}\n')
-# del temp_dict['email'] 
-# del temp_dict['first_name'] 
-# sorted_temp = {k: v for k, v in sorted(temp_dict.items(), key=lambda item: item[1])}
-# print(f'sorted_temp :\n{sorted_temp}\n')
-# article_dict = {}
-# for key in sorted_temp:
-#     article_dict[key] = get_urls(key)
-# print(f'article_dict :\n{article_dict}\n')
-# print(f'list_of_dicts :\n{list_of_dicts}\n')
-list_of_dicts = [{'email': 'niknair31898@gmail.com', 'first_name': 'Nik', 'algorithms': 7, 'ascii': -2, 'binary': 1, 'c-keywords': -3, 
-            'c-programming-basic': 0, 'c-programming-errors': 0, 'c-variables': 6, 'data-representation': 2, 'rgb': 3}]
-article_dict = {'algorithms': ['https://en.wikipedia.org/wiki/c-keywords_', 'https://medium.com/@roy_schlegel/youre-in-debt-shit-e97202f997fa', 'https://www.youtube.com/watch?v=Y6BZzdqAh5w'], 'data-representation': ['https://en.wikipedia.org/wiki/c-keywords_', 'https://medium.com/@roy_schlegel/youre-in-debt-shit-e97202f997fa', 'https://www.youtube.com/watch?v=Y6BZzdqAh5w'], 'c-keywords': ['https://en.wikipedia.org/wiki/c-keywords_', 'https://medium.com/@roy_schlegel/youre-in-debt-shit-e97202f997fa', 'https://www.youtube.com/watch?v=Y6BZzdqAh5w'], 'ascii': ['https://en.wikipedia.org/wiki/ascii_', 'https://medium.com/@apiltamang/unicode-utf-8-and-ascii-encodings-made-easy-5bfbe3a1c45a?source=search_post---------0', 'https://www.youtube.com/watch?v=EkQaR6B3FSs'], 'c-programming-basic': ['https://en.wikipedia.org/wiki/c-programming-basic_', 'https://blog.srnd.org/creating-coder-clicker-a-cookie-clicker-clone-in-meteor-part-1-cdf8c0780272?source=search_post---------0', 'https://www.youtube.com/watch?v=U8_8fTODn5g'], 'c-programming-errors': ['https://en.wikipedia.org/wiki/c-programming-errors_', 'https://medium.com/@matter.matters/this-depends-on-how-you-imagine-a-typical-type-error-432ead91cfc5#43e6', 'https://www.youtube.com/watch?v=rYozJhQnl9k'], 'binary': ['https://en.wikipedia.org/wiki/binary_', 'https://towardsdatascience.com/understanding-binary-cross-entropy-log-los/data-representation_', 'https://medium.com/@eisenzopf/graph-databases-linked-data-rdf-and-the-semantic-web-wasteland-69e9f4347a5b#0429', 'https://www.youtube.com/watch?v=L82yqAfkBsc'], 'rgb': ['https://en.wikipedia.org/wiki/rgb_', 'https://medium.com/sketch-app-sources/mark-and-the-terrible-horrible-no-good-very-bad-way-to-override-a-sketch-symbol-with-any-rgb-34e70da54bd5?source=search_post---------0', 'https://www.youtube.com/watch?v=xAwB9lQnxAY'], 'c-variables': ['https://en.wikipedia.org/wiki/c-variables_', 'https://medium.com/@cybercodetwins/intro-to-c-variables-constants-data-types-159256fa2894?source=search_post---------0', 'https://www.youtube.com/watch?v=rFnrs-b4b1ac61f5b0?source=search_post---------0', 'https://www.youtube.com/watch?v=6hfOvs8pY1k']}
+# Uncomment for final
+list_of_dicts = getTagsofEmailsCombined(conn)
+temp_dict = dict(list_of_dicts[0])
+print(f'\n temp_dict :\n{temp_dict}\n')
+del temp_dict['email'] 
+del temp_dict['first_name'] 
+sorted_temp = {k: v for k, v in sorted(temp_dict.items(), key=lambda item: item[1])}
+print(f'sorted_temp :\n{sorted_temp}\n')
+article_dict = {}
+for key in sorted_temp:
+    article_dict[key] = get_urls(key)
 print(f'article_dict :\n{article_dict}\n')
+print(f'list_of_dicts :\n{list_of_dicts}\n')
+
+# # Uncomment for testing
+# list_of_dicts = [{'email': 'niknair31898@gmail.com', 'first_name': 'Nik', 'algorithms': 7, 'ascii': -2, 'binary': 1, 'c-keywords': -3, 
+#             'c-programming-basic': 0, 'c-programming-errors': 0, 'c-variables': 6, 'data-representation': 2, 'rgb': 3}]
+# article_dict = {'algorithms': ['https://en.wikipedia.org/wiki/c-keywords_', 'https://medium.com/@roy_schlegel/youre-in-debt-shit-e97202f997fa', 'https://www.youtube.com/watch?v=Y6BZzdqAh5w'], 'data-representation': ['https://en.wikipedia.org/wiki/c-keywords_', 'https://medium.com/@roy_schlegel/youre-in-debt-shit-e97202f997fa', 'https://www.youtube.com/watch?v=Y6BZzdqAh5w'], 'c-keywords': ['https://en.wikipedia.org/wiki/c-keywords_', 'https://medium.com/@roy_schlegel/youre-in-debt-shit-e97202f997fa', 'https://www.youtube.com/watch?v=Y6BZzdqAh5w'], 'ascii': ['https://en.wikipedia.org/wiki/ascii_', 'https://medium.com/@apiltamang/unicode-utf-8-and-ascii-encodings-made-easy-5bfbe3a1c45a?source=search_post---------0', 'https://www.youtube.com/watch?v=EkQaR6B3FSs'], 'c-programming-basic': ['https://en.wikipedia.org/wiki/c-programming-basic_', 'https://blog.srnd.org/creating-coder-clicker-a-cookie-clicker-clone-in-meteor-part-1-cdf8c0780272?source=search_post---------0', 'https://www.youtube.com/watch?v=U8_8fTODn5g'], 'c-programming-errors': ['https://en.wikipedia.org/wiki/c-programming-errors_', 'https://medium.com/@matter.matters/this-depends-on-how-you-imagine-a-typical-type-error-432ead91cfc5#43e6', 'https://www.youtube.com/watch?v=rYozJhQnl9k'], 'binary': ['https://en.wikipedia.org/wiki/binary_', 'https://towardsdatascience.com/understanding-binary-cross-entropy-log-los/data-representation_', 'https://medium.com/@eisenzopf/graph-databases-linked-data-rdf-and-the-semantic-web-wasteland-69e9f4347a5b#0429', 'https://www.youtube.com/watch?v=L82yqAfkBsc'], 'rgb': ['https://en.wikipedia.org/wiki/rgb_', 'https://medium.com/sketch-app-sources/mark-and-the-terrible-horrible-no-good-very-bad-way-to-override-a-sketch-symbol-with-any-rgb-34e70da54bd5?source=search_post---------0', 'https://www.youtube.com/watch?v=xAwB9lQnxAY'], 'c-variables': ['https://en.wikipedia.org/wiki/c-variables_', 'https://medium.com/@cybercodetwins/intro-to-c-variables-constants-data-types-159256fa2894?source=search_post---------0', 'https://www.youtube.com/watch?v=rFnrs-b4b1ac61f5b0?source=search_post---------0', 'https://www.youtube.com/watch?v=6hfOvs8pY1k']}
+# print(f'article_dict :\n{article_dict}\n')
 
 for user in list_of_dicts:
     email = user['email']
@@ -123,16 +120,15 @@ for user in list_of_dicts:
     mail = Email(to=email, subject='AWS SES Test')
     sorted_user_tags = {k: v for k, v in sorted(user.items(), key=lambda item: item[1])}
     print(f'sorted_user_tags :\n{sorted_user_tags}\n')
-    segs = int(len(sorted_user_tags)/3)
     url_list = []
-    vals = msc.ARTICLES_PER_SITE_MAX
-    for x in batch(list(sorted_user_tags), segs):
-        print(f'batch : {x}\n')
-        for key in x:
-            url_list.append(article_dict[key][:vals])
-            print(f'key : {key}\narticle_dict[key][:vals] : {article_dict[key][:vals]}\n')
-        print(f'url_list : {url_list}\n')
-        vals = vals - 1
+    for key in sorted_user_tags:
+        if -15 < sorted_user_tags[key] < -5:
+            url_list.append(article_dict[key][:msc.ARTICLES_PER_SITE_MAX])
+        elif -5 < sorted_user_tags[key] < 5:
+            url_list.append(article_dict[key][:msc.ARTICLES_PER_SITE_MID])
+        elif 5 < sorted_user_tags[key] < 15:
+            url_list.append(article_dict[key][:msc.ARTICLES_PER_SITE_MIN])
+    print(f'url_list : {url_list}\n')
     flat_url_list = [l for sublist in url_list for l in sublist]
     print(f'flat_url_list : {flat_url_list}\n')
     mail.html('email.html', first_name, flat_url_list)
