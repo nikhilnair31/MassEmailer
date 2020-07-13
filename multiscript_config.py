@@ -10,16 +10,16 @@ ARTICLES_PER_SITE_MID = 1
 ARTICLES_PER_SITE_MAX = 2
 
 # AWS SES
-AWS_REGION = 'us-east-1'
-AWS_ACCESS_KEY = 'AKIA6O5YE5GYSQQ4XVXQ'
-AWS_SECRET_KEY = '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'
+AWS_REGION = '<insert>'
+AWS_ACCESS_KEY = '<insert>'
+AWS_SECRET_KEY = '<insert>'
 
 # AWS RDS
-DB_URL = 'lgv3.cbgyqdzzm09b.ap-south-1.rds.amazonaws.com'
-DB_USERNAME = 'test'
-DB_PASSWORD = 'test123'
+DB_URL = '<insert>'
+DB_USERNAME = '<insert>'
+DB_PASSWORD = '<insert>'
 DB_PORT = 5432
-DB_NAME = 'eml_test'
+DB_NAME = '<insert>'
 
 ## CELERY AND REDIS
 SVM_KERNEL = 'rbf'
